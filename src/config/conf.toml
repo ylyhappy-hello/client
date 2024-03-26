@@ -1,0 +1,29 @@
+[server]
+port = 55544
+ipv4 = "127.0.0.1"
+
+[client]
+key = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+hearbeat_packet_sending_interval = 15
+
+[upload]
+  upload_local_folder = "/home/yly/upload_files"
+  upload_monitor_interval_seconds = 30
+  upload_monitor_upload_max_err_files = 100
+  [upload.qiniu]
+    uptoken = "p3TgNmhjou3tLt9UguPxSBztvjmHFEdSLD24XnL7:f6nJHze-307q1Q0X-yrRMsuZM5E=:eyJzY29wZSI6InlseWhhcHB5LWltZ3MiLCJkZWFkbGluZSI6MTcwNzY0MDQzNCwiZnNpemVNaW4iOjgxOTIsImZzaXplTGltaXQiOjEwNDg1NzYwfQ=="
+    bucket = "ylyhappy-imgs"
+
+[detect]
+  model_path = "config/yolov8n.onnx"
+  img_size = [640, 640]
+  classes = ["111", "111"]
+  model_shape = [640, 640]
+  model_confidense_threshold = ""
+  model_nms_threshold = ""
+  letter_box_for_square = ""
+  detect_img_save_path = "/home/yly/upload_files"
+[log]
+  log_path = ""
+  log_file_format = ""
+  
