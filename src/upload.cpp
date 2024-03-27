@@ -3,11 +3,15 @@
 #include "config/configuration.hpp"
 #include "utils/log.hpp"
 #include "utils/err.hpp"
+#include "utils/utils.hpp"
 #include <cstdlib>
+#include <unordered_map>
 #include <string>
 namespace SocketClient {
 
 Upload *Upload::instance = nullptr;
+
+std::unordered_map<std::string, char> file_mapper;
 
 Upload *Upload::get_instance() {
   if (instance == nullptr) {
@@ -75,6 +79,8 @@ void Upload::join_polling_thead() {
 }
 void Upload::stop_polling() { this->exitFlag = true; };
 void Upload::uploadFile(std::string local_file, std::string remote_file_name) {
+  if (file_mapper.count(local_file)) return;
+  file_mapper[local_file] = 1;
   wait_queue.push(new WaitUploadFile{.local_file = local_file,
                                      .remote_file_name = remote_file_name});
 }
@@ -92,7 +98,7 @@ bool Upload::_uploadFile(std::string &local_file,
       Qiniu_Io_PutFile(&clinet, &putRet, uptoken.c_str(),
                        remote_file_name.c_str(), local_file.c_str(), &putExtra);
   if (error.code != 200) {
-    LogError("七牛云上传文件出错", "错误信息", error.message, "错误码",
+    LogError("七牛云上传文件出错, 错误信息: %s, 错误码: %d" , error.message,
              error.code);
   } else {
     /*200, 正确返回了, 你可以通过statRet变量查询一些关于这个文件的信息*/
@@ -104,7 +110,7 @@ bool Upload::_uploadFile(std::string &local_file,
 }
 
 void Upload::_upload_file_success(std::string &local_file, std::string &remote_file_url) {
-  SocketClinetMain::get_instance()->send_msg("pushed", remote_file_url);
+  sendDataToServer(local_file, local_file, remote_file_url, "1", "100");
   if (std::remove(local_file.c_str()) != 0) {
     LogError("系统删除文件%s失败", local_file.c_str());
     return;

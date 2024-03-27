@@ -7,9 +7,14 @@ set(CMAKE_CXX_STANDRD_REQUIRED True)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 set(CMAKE_EXPORT_COMPILE_COMMANDS True)
 set(RESOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/config)
+
+add_definitions (-Wno-format-security)
+
 file(COPY ${RESOURCES_DIR}/conf.toml DESTINATION ${CMAKE_BINARY_DIR}/config)
 file(COPY ${RESOURCES_DIR}/yolov8n.onnx DESTINATION ${CMAKE_BINARY_DIR}/config)
 
+find_package(CURL REQUIRED)
+find_package(OpenSSL REQUIRED)
 include(FetchContent)
 FetchContent_Declare(
     tomlplusplus
@@ -18,6 +23,7 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(tomlplusplus)
 include_directories(
+  ${CURL_INCLUDE_DIRS}
   "src/"
 )
 file(GLOB_RECURSE SRCFILES CONFIGURE_DEPENDS "src/**.cpp")
@@ -31,7 +37,8 @@ add_dependencies(${PROJECT_NAME} resources_target)
 
 target_link_libraries(${PROJECT_NAME} tomlplusplus::tomlplusplus
   "${CMAKE_SOURCE_DIR}/qiniuyun-c-sdk/lib/libqiniu.so"
-  )
-target_include_directories(${PROJECT_NAME} PUBLIC "${PROJECT_BINARY_DIR}" "${tomlplusplus_BINARY_DIR}/include" "qiniuyun-c-sdk/include" )
+${CURL_LIBRARIES} ${OPENSSL_LIBRARIES}
+   )
+target_include_directories(${PROJECT_NAME} PUBLIC "${PROJECT_BINARY_DIR}" "${tomlplusplus_BINARY_DIR}/include" "qiniuyun-c-sdk/include" ${OPENSSL_INCLUDE_DIR} )
 
 

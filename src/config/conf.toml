@@ -7,11 +7,11 @@ key = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 hearbeat_packet_sending_interval = 15
 
 [upload]
-  upload_local_folder = "/home/yly/upload_files"
+  upload_local_folder = "/home/yly_no_nvidia/upload_files"
   upload_monitor_interval_seconds = 30
   upload_monitor_upload_max_err_files = 100
   [upload.qiniu]
-    uptoken = "p3TgNmhjou3tLt9UguPxSBztvjmHFEdSLD24XnL7:f6nJHze-307q1Q0X-yrRMsuZM5E=:eyJzY29wZSI6InlseWhhcHB5LWltZ3MiLCJkZWFkbGluZSI6MTcwNzY0MDQzNCwiZnNpemVNaW4iOjgxOTIsImZzaXplTGltaXQiOjEwNDg1NzYwfQ=="
+    uptoken = "ZOJvBqeA48rysajH_-5xpFw4K0eC2zyGQK8uA-oN:tOQsBTCAEcmuiuK27_zPy9JYG1Q=:eyJzY29wZSI6InlseWhhcHB5LWltZ3MiLCJkZWFkbGluZSI6MTcxMzQ3NjYyNywiZnNpemVNaW4iOjgwOTYsImZzaXplTGltaXQiOjgwOTYwMDAsImRldGVjdE1pbWUiOjF9"
     bucket = "ylyhappy-imgs"
 
 [detect]
@@ -22,7 +22,7 @@ hearbeat_packet_sending_interval = 15
   model_confidense_threshold = ""
   model_nms_threshold = ""
   letter_box_for_square = ""
-  detect_img_save_path = "/home/yly/upload_files"
+  detect_img_save_path = "/home/yly_no_nvidia/upload_files"
 [log]
   log_path = ""
   log_file_format = ""

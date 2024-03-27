@@ -4,6 +4,7 @@
 //#include "detect/detect.hpp"
 #include "utils/dateformat.hpp"
 #include "utils/log.hpp"
+#include "utils/utils.hpp"
 #include <iostream>
 //#include <opencv2/core/mat.hpp>
 
@@ -16,23 +17,22 @@ void testSocket() {
 void testUpload() {
   SocketClient::Configuration *c = SocketClient::Configuration::get_instance();
   c->init();
-  SocketClient::SocketClinetMain *socketmain =
-      SocketClient::SocketClinetMain::get_instance();
-  socketmain->init();
   SocketClient::Upload *upload = SocketClient::Upload::get_instance();
   upload->init();
   upload->join_polling_thead();
   LogError("程序结束了");
 }
 
-//void testDetect() {
-//  SocketClient::Detect *detect = SocketClient::Detect::get_instanse();
-//  detect->init();
-//  cv::Mat frame;
-//  LogInfo(SocketClient::timeFormatStrAddTimestamp());
-//  detect->start();
-//  LogInfo("Detect pass ok");
-//}
+// void testDetect() {
+//   SocketClient::Detect *detect = SocketClient::Detect::get_instanse();
+//   detect->init();
+//   cv::Mat frame;
+//   LogInfo(SocketClient::timeFormatStrAddTimestamp());
+//   detect->start();
+//   LogInfo("Detect pass ok");
+// }
+//
+//
 void testConfig() {
   SocketClient::Configuration *c = SocketClient::Configuration::get_instance();
   c->init();
@@ -41,13 +41,7 @@ void testConfig() {
 }
 
 int main(int argc, char *argv[]) {
-
-  // HTTP
-  httplib::Client cli("http://cpp-httplib-server.yhirose.repl.co");
-
-  auto res = cli.Get("/hi");
-  LogInfo("%d", res->status);
-  LogInfo("%s", res->body.c_str());
+  testUpload();
 
   return 0;
 }
