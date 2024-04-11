@@ -42,6 +42,5 @@ void testConfig() {
 
 int main(int argc, char *argv[]) {
   testUpload();
-
   return 0;
 }
